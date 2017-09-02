@@ -9,7 +9,7 @@ const browserSync = require('browser-sync').create();
 
 
 // Static Server + watching scss/html files
-gulp.task('server', ['sass', 'js', 'html'], function() {
+gulp.task('server', ['sass', 'js', 'html', 'img', 'fonts'], function() {
 
 	browserSync.init({
 		server: "./public"
@@ -17,6 +17,8 @@ gulp.task('server', ['sass', 'js', 'html'], function() {
 
 	gulp.watch("assets/scss/*.scss", ['sass']);
 	gulp.watch("assets/html/*.html", ['html']);
+	gulp.watch("assets/img/*.*", ['img']);
+	gulp.watch("assets/fonts/*.*", ['fonts']);
 	gulp.watch("assets/js/*.js", ['js']);
 });
 
@@ -30,10 +32,22 @@ gulp.task('sass', function() {
 		.pipe(browserSync.stream());
 });
 
-// Compile sass into CSS & auto-inject into browsers
+// Compile html into browsers
 gulp.task('html', function() {
 	return gulp.src("assets/html/*.html")
 		.pipe(gulp.dest("public/"))
+		.pipe(browserSync.stream());
+});
+
+// Compile img into browsers
+gulp.task('img', function() {
+	return gulp.src("assets/img/*.*")
+		.pipe(gulp.dest("public/img/"))
+		.pipe(browserSync.stream());
+});
+gulp.task('fonts', function() {
+	return gulp.src("assets/fonts/*.*")
+		.pipe(gulp.dest("public/fonts/"))
 		.pipe(browserSync.stream());
 });
 
@@ -41,6 +55,7 @@ gulp.task('html', function() {
 gulp.task('js', function() {
 	return gulp.src(
 		[
+			'assets/js/jquery-3.2.1.min.js',
 			'assets/js/main.js'
 		])
 		.pipe(sourcemaps.init())

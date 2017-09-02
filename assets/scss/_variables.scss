@@ -1,0 +1,29 @@
+// Шрифты
+@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&subset=all');
+@font-face {
+	font-family: 'NewBaskervilleCTT';
+	font-style: normal;
+	font-weight: 400;
+	src: local('NewBaskervilleCTT'), local('NewBaskervilleCTT-Regular'),
+	url(../fonts/newbaskervillectt.woff) format('woff'),
+	url(../fonts/newbaskervillectt.ttf) format('truetype');
+}
+
+// Основные переменные
+$max-width: 1280px;
+$bg-color: #fff;
+$color: #242526;
+$font-family: 'PT Sans', sans-serif;
+$font-size: 16px;
+
+//Header
+$header-height: 80px;
+$header-bgc: #282a2d;
+
+//Content
+
+//Slider
+
+//Popup
+
+//Footer
