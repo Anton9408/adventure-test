@@ -3,6 +3,7 @@ body {
 	color: $color;
 	font-size: $font-size;
 	font-family: $font-family;
+	overflow-x: hidden;
 }
 
 .wrapper {
@@ -19,9 +20,11 @@ body {
 	flex-direction: row;
 	align-items: center;
 	padding: 0 10px;
+	transition: 0.4s background-color;
 	
 	&.header-hover {
 		background-color: #22539d;
+		transition: 0.4s background-color;
 	}
 
 	.logo {
@@ -30,7 +33,8 @@ body {
 		align-items: center;
 		height: 60px;
 		text-decoration: none;
-		width: 100%;
+		max-width: 300px;
+
 
 		&-img {
 			width: auto;
@@ -68,7 +72,7 @@ body {
 		margin: 0 10px;
 
 		&-item {
-			margin-right: 20px;
+
 
 			&-link {
 				text-decoration: none;
@@ -77,6 +81,8 @@ body {
 				font-weight: 600;
 				line-height: 2;
 				transition: 0.4s color;
+				margin-right: 20px;
+				cursor: pointer;
 				
 				&:hover {
 					color: #242526;
@@ -101,15 +107,88 @@ body {
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
+		margin: 0;
+
+		&-items {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			width: 50%;
+
+
+
+			&-full {
+				width: 100%;
+			}
+
+			&-big-size {
+				background-image: url('../img/big.jpg');
+				background-repeat: no-repeat;
+				background-position: 0px -200px;
+				width: 48.4%;
+				margin: 10px;
+				position: relative;
+
+
+				&:before {
+					content: '';
+					background-color: rgba(0,0,0, 0.3);
+					min-width: 100%;
+					min-height: 100%;
+					z-index: 1;
+					position: absolute;
+				}
+
+				.country-item-title {
+					position: relative;
+					top: auto;
+					left: auto;
+					transform: translate(0);
+					margin: 90px 40px 0;
+					font-size: 2.5em;
+					z-index: 3;
+					color: #fff;
+				}
+
+				.country-item-list {
+					z-index: 3;
+					position: relative;
+					color: #fff;
+					margin: 20px 50px 0;
+					font-family: 'NewBaskervilleCTT', arial;
+					font-size: 1.5em;
+					line-height: 2;
+				}
+			}
+		}
 
 		&-item {
 			min-width: 300px;
 			width: 300px !important;
 			height: 200px;
-			margin: 20px;
+			margin: 10px;
 			background-color: $color;
 			color: #fff;
 			position: relative;
+			transition: all 0.4s;
+
+			&.not-filter {
+				transform: scale(0.6);
+				opacity: 0.4;
+				transition: all 0.4s;
+
+				button {
+					display: none;
+				}
+			}
+
+			& > div {
+				height: 100%;
+
+				& > div {
+					height: 100%;
+				}
+			}
 
 			&-img {
 				width: 100%;
@@ -117,11 +196,7 @@ body {
 				z-index: 1;
 			}
 			&-title {
-				position: absolute;
-				top: 40%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				line-height:0;
+				position: relative;
 				z-index: 2;
 				font-family: 'NewBaskervilleCTT', arial;
 				font-size: 2em;
@@ -130,6 +205,12 @@ body {
 
 			&-slide {
 				position: relative;
+				min-width: 100%;
+				min-height: 100%;
+				background-size: cover;
+				display: flex;
+				justify-content: center;
+				align-items: center;
 
 				&:before {
 					content: '';
@@ -138,6 +219,38 @@ body {
 					min-height: 100%;
 					z-index: 2;
 					position: absolute;
+				}
+
+				&.slide-next {
+					background-color: #313336;
+
+					&:before {
+						background-color: transparent;
+					}
+
+					.country-item-title {
+						position: absolute;
+						left: 20px;
+						bottom: 0;
+						top: auto;
+						font-size: 1.5em;
+						transform: translate(0);
+					}
+
+					.country-item-desc {
+						padding: 40px 20px;
+					}
+
+					.country-item-zoom {
+						width: 40px;
+						height: 40px;
+						position: absolute;
+						left: 50%;
+						top: 50%;
+						transform: translate(-50%, -50%);
+						z-index: 3;
+						cursor: pointer;
+					}
 				}
 			}
 
@@ -169,6 +282,36 @@ body {
 					transition: .4s opacity;
 				}
 			}
+		}
+	}
+}
+
+.footer {
+	height: 60px;
+	width: 100%;
+	background: #282a2d;
+	display: flex;
+	align-items: center;
+
+	.wrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+	}
+	.copyright {
+		margin: 0 10px;
+		color: #6b7076;
+		font-family: 'NewBaskervilleCTT', arial;
+	}
+
+	.author {
+		margin: 0 10px;
+		font-family: $font-family;
+		color: #6b7076;
+
+		span {
+			color: #b5b9be;
 		}
 	}
 }
