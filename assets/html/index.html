@@ -24,11 +24,11 @@
 	<div class="content">
 		<div class="wrapper">
 			<div class="filter">
-				<div href="" class="filter-item-link active" data-cat="all">Все страны</div>
-				<div href="" class="filter-item-link" data-cat="culture">Культура</div>
-				<div href="" class="filter-item-link" data-cat="extreme">Экстрим</div>
-				<div href="" class="filter-item-link" data-cat="atmosphere">Атмосфера</div>
-				<div href="" class="filter-item-link" data-cat="people">Люди</div>
+				<div class="filter-item-link active" data-cat="all">Все страны</div>
+				<div class="filter-item-link" data-cat="culture">Культура</div>
+				<div class="filter-item-link" data-cat="extreme">Экстрим</div>
+				<div class="filter-item-link" data-cat="atmosphere">Атмосфера</div>
+				<div class="filter-item-link" data-cat="people">Люди</div>
 			</div>
 			<div class="country">
 				<div class="country-items">
@@ -43,11 +43,11 @@
 							<h2 class="country-item-title">Cuba</h2>
 						</div>
 						<div class="country-item-slide slide-next" style="background-image: url('img/cuba/slide-2.jpg'); margin: 0; background-position: center;">
-							<img src="img/icon_zoom.svg" alt="Увеличить" class="country-item-zoom">
+							<img src="img/icon_zoom.svg" alt="Увеличить" class="country-item-zoom" data-image="img/cuba/slide-2.jpg">
 							<h2 class="country-item-title">Cuba</h2>
 						</div>
 						<div class="country-item-slide slide-next" style="background-image: url('img/cuba/slide-3.jpg'); margin: 0; background-position: center;">
-							<img src="img/icon_play.svg" alt="Увеличить" class="country-item-zoom">
+							<img src="img/icon_play.svg" alt="Воспроизвести" class="country-item-play" data-video="https://www.youtube.com/embed/g-XZUq3No_U">
 							<h2 class="country-item-title">Cuba</h2>
 						</div>
 					</div>
@@ -286,6 +286,18 @@
 			</div>
 		</div>
 	</footer>
+	<div class="popup popup-image">
+		<div class="popup-wrapper">
+			<div class="button-close"></div>
+			<div class="image"></div>
+		</div>
+	</div>
+	<div class="popup popup-video">
+		<div class="popup-wrapper">
+			<div class="button-close"></div>
+			<div class="video"></div>
+		</div>
+	</div>
 	<script src="js/main.min.js"></script>
 </body>
 </html>

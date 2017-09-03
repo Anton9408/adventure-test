@@ -1,9 +1,52 @@
+@mixin breakpoint($lists...) {
+	$media: only screen;
+
+	@each $list in $lists {
+		@if length($list) == 1 {
+			$media: append($media, "and (max-width: #{$list})");
+		} @else if length($list) == 2 {
+			@if nth($list, 1) == max {
+				$media: append($media, "and (max-width: #{nth($list, 2)})");
+			} @else {
+				$media: append($media, "and (min-width: #{nth($list, 2)})");
+			}
+		} @else {
+			@error 'Too many arguments set for breakpoint';
+		}
+	}
+
+	@media #{$media} {
+		@content;
+	}
+}
+
+@mixin on($list) {
+	@include breakpoint($list) {
+		@content;
+	}
+}
+
 body {
 	background-color: $bg-color;
 	color: $color;
 	font-size: $font-size;
 	font-family: $font-family;
 	overflow-x: hidden;
+	min-width: 300px;
+
+	&.popups {
+		overflow: hidden;
+
+		&:before {
+			content: '';
+			background-color: rgba(0,0,0,.8);
+			z-index: 100;
+			min-width: 100%;
+			height: 100%;
+			display: block;
+			position: fixed;
+		}
+	}
 }
 
 .wrapper {
@@ -70,6 +113,7 @@ body {
 		display: flex;
 		flex-direction: row;
 		margin: 0 10px;
+		flex-wrap: wrap;
 
 		&-item {
 
@@ -113,21 +157,77 @@ body {
 			display: flex;
 			flex-direction: row;
 			flex-wrap: wrap;
-			width: 50%;
-
-
+			flex: 1 50%;
 
 			&-full {
-				width: 100%;
+				flex: 1 100%;
+
+				@include on(410px) {
+					flex-direction: column;
+					flex-wrap: nowrap;
+				}
+
+				.country-item {
+
+					@include on(1276px) {
+						flex: 1 0 20%;
+					}
+
+					@include on(1000px) {
+						flex: 1 20%;
+					}
+
+
+					@include on(600px) {
+						flex: 1 45%;
+					}
+
+					@include on(410px) {
+						flex: 1 100%;
+						max-width: 384px;
+					}
+
+					@include on(380px) {
+						flex: 1 100%;
+						max-width: 355px;
+					}
+
+					@include on(360px) {
+						max-width: 340px;
+					}
+
+					@include on(350px) {
+						max-width: 330px;
+					}
+
+					@include on(340px) {
+						max-width: 310px;
+					}
+
+					@include on(320px) {
+						max-width: 290px;
+					}
+				}
 			}
 
 			&-big-size {
 				background-image: url('../img/big.jpg');
 				background-repeat: no-repeat;
 				background-position: 0px -200px;
-				width: 48.4%;
+				flex: 1 48%;
 				margin: 10px;
 				position: relative;
+
+				@include on(1000px) {
+					background-size: cover;
+				}
+
+				@include on(420px) {
+					background-position: 0px -100px;
+				}
+				@include on(360px) {
+					background-position: 0;
+				}
 
 
 				&:before {
@@ -148,6 +248,10 @@ body {
 					font-size: 2.5em;
 					z-index: 3;
 					color: #fff;
+
+					@include on(420px) {
+						margin: 20px 20px 0;
+					}
 				}
 
 				.country-item-list {
@@ -163,14 +267,49 @@ body {
 		}
 
 		&-item {
-			min-width: 300px;
-			width: 300px !important;
-			height: 200px;
+			max-width: 300px;
+			width: 100% !important;
+			height: auto;
 			margin: 10px;
 			background-color: $color;
 			color: #fff;
 			position: relative;
 			transition: all 0.4s;
+			flex: 1 45%;
+
+			@include on(1000px) {
+				flex: 1 20%;
+			}
+
+			@include on(700px) {
+				flex: 1 45%;
+				max-width: 315px;
+			}
+			@include on(410px) {
+				flex: 1 100%;
+				max-width: 384px;
+			}
+
+			@include on(380px) {
+				flex: 1 100%;
+				max-width: 355px;
+			}
+
+			@include on(360px) {
+				max-width: 340px;
+			}
+
+			@include on(350px) {
+				max-width: 330px;
+			}
+
+			@include on(340px) {
+				max-width: 310px;
+			}
+
+			@include on(320px) {
+				max-width: 290px;
+			}
 
 			&.not-filter {
 				transform: scale(0.6);
@@ -201,6 +340,10 @@ body {
 				font-family: 'NewBaskervilleCTT', arial;
 				font-size: 2em;
 				font-weight: 300;
+
+				@include on(820px) {
+					font-size: 1.6em;
+				}
 			}
 
 			&-slide {
@@ -239,9 +382,11 @@ body {
 
 					.country-item-desc {
 						padding: 40px 20px;
+						margin: 0;
+						-webkit-margin-after: 2em;
 					}
 
-					.country-item-zoom {
+					.country-item-zoom, .country-item-play {
 						width: 40px;
 						height: 40px;
 						position: absolute;
@@ -314,4 +459,60 @@ body {
 			color: #b5b9be;
 		}
 	}
+}
+
+.popup {
+	display: none;
+
+	&-image {
+		&.open-popup {
+			display: block;
+		}
+	}
+
+	&-video {
+
+		&.open-popup {
+			display: block;
+		}
+	}
+
+	.button-close {
+		background: url('../img/icon_close.svg') no-repeat;
+		width: 40px;
+		height: 40px;
+		z-index: 101;
+		position: absolute;
+		right: -50px;
+		top: -50px;
+		opacity: 0.5;
+		transition: 0.4 opacity;
+		cursor: pointer;
+
+		&:hover {
+			opacity: 1;
+			transition: 0.4 opacity;
+		}
+	}
+
+	&-wrapper {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 102;
+	}
+
+
+	.image, .video {
+		width: 100%;
+		height: 100%;
+
+		img, video {
+			width: 100%;
+			height: auto;
+
+		}
+	}
+
 }

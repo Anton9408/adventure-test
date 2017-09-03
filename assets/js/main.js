@@ -1,6 +1,8 @@
 $(document).ready(function() {
-	const body = $('body');
-	const filterLink = $('.filter-item-link');
+	var body = $('body'),
+		filterLink = $('.filter-item-link'),
+		popupImage = $('.popup-image'),
+		popupVideo = $('.popup-video');
 
 	body.on('mouseover', '.logo', () => {
 		$('.header').addClass('header-hover');
@@ -13,75 +15,54 @@ $(document).ready(function() {
 		filterLink.removeClass('active');
 		$(this).addClass('active');
 
-		const filter = $(this).attr('data-cat');
+		var filter = $(this).attr('data-cat');
 
 		$('.country-item').each(function () {
-
 			if (filter !== $(this).attr('data-cat') && filter !== 'all') {
 				$(this).addClass('not-filter');
 			} else {
 				$(this).removeClass('not-filter');
 			}
 		});
+	});
 
+	body.on('click', '.country-item-zoom', function () {
+		body.addClass('popups');
+		popupImage.addClass('open-popup');
+
+		var img = $(this).attr('data-image');
+
+		if (img) {
+			popupImage.find('.image').append('<img src=' + img + '>');
+		} else {
+			popupImage.find('.image').append('<img src="https://placehold.it/1200x600">');
+		}
+
+
+		body.on('click', '.open-popup .button-close', function () {
+			body.removeClass('popups');
+			popupImage.removeClass('open-popup');
+			popupImage.find('.image img').remove();
+		});
+	});
+
+	body.on('click', '.country-item-play', function () {
+		body.addClass('popups');
+		popupVideo.addClass('open-popup');
+
+		var video = $(this).attr('data-video');
+
+		if (video) {
+			popupVideo.find('.video').append('<iframe src="' + video + '"frameborder="0" allowfullscreen></iframe>');
+		} else {
+			popupVideo.find('.video').append('<img src="https://placehold.it/1200x600">');
+		}
+
+
+		body.on('click', '.open-popup .button-close', function () {
+			body.removeClass('popups');
+			popupVideo.removeClass('open-popup');
+			popupVideo.find('.video iframe').remove();
+		});
 	});
 });
-
-const sliders = document.querySelectorAll('.country-item');
-Siema.prototype.addArrows = function() {
-	this.prevArrow = document.createElement('button');
-	this.nextArrow = document.createElement('button');
-	this.prevArrow.classList.add('prev-button');
-	this.nextArrow.classList.add('next-button');
-
-	this.selector.appendChild(this.prevArrow);
-	this.selector.appendChild(this.nextArrow);
-
-	this.prevArrow.addEventListener('click', () => this.prev());
-	this.nextArrow.addEventListener('click', () => this.next());
-}
-for(const siema of sliders) {
-	const instance = new Siema({
-		selector: siema,
-		loop: true
-	});
-	instance.addArrows();
-}
-
-function Popup({ type, link }) {
-	const popupElement = document.createElement('div');
-	popupElement.classList.add('popup');
-
-	switch (type) {
-		case 'image': {
-			const imgElement = document.createElement('img');
-			imgElement.src = link;
-			popupElement.classList.add('popup__img');
-			popupElement.appendChild(imgElement);
-			break;
-		}
-		case 'video': {
-			const videoElement = document.createElement('iframe');
-			videoElement.src = link;
-			popupElement.classList.add('popup__video');
-			popupElement.appendChild(videoElement);
-			break;
-		}
-	}
-}
-
-function VideoPopup({ link }) {
-	const videoPopup = new Popup({
-		type: 'video',
-		link
-	});
-	videoPopup.classList.add('popup_type_video');
-
-	return videoPopup;
-}
-
-// $0.addEventListener('click', (e) => {
-// 	const videoLink = e.target.getElementsByClassName('video-link')[0].href;
-// const bPopup = new Popup({ videoLink });
-// document.appendChild(bPopup);
-// });
