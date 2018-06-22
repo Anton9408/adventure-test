@@ -60,7 +60,5 @@ typings/
 .env
 
 .idea
-package-lock.json
-package.json
 public/
 /public/
